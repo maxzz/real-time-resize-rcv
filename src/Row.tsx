@@ -57,7 +57,7 @@ const Row = () => {
     items: Item[];
   } = useVirtual({
     itemCount: itemCount,
-    //resetScroll: true,
+    resetScroll: true,
   } as Options & {resetScroll: boolean} );
   //console.log('items', itemsToRenderNow);
 
