@@ -5,25 +5,27 @@ import useVirtual, {Item} from "react-cool-virtual";
 
 import "./styles.scss";
 
-const AccordionItem = forwardRef(
-  (
-    {
-      children,
-      height,
-      ...rest
-    }: { children: JSX.Element; height: number } & React.HTMLAttributes<
-      HTMLDivElement
-    >,
-    ref: React.MutableRefObject<HTMLDivElement>
-  ) => {
+type AccordionProps = {
+  children: JSX.Element;
+  height: number;
+  expandedHeigh: number,
+} & React.HTMLAttributes<HTMLDivElement>;
+
+const itemStyles: React.CSSProperties = {};
+
+const AccordionItem = forwardRef((props: AccordionProps, ref: React.MutableRefObject<HTMLDivElement>) => {
+    const { children, height, expandedHeigh, ...rest } = props;
     const [h, setH] = useState(height);
+    const isExpanded = h !== 50;
     return (
       <div
         {...rest}
-        style={{ height: `${h}px` }}
+        style={{...itemStyles,  height: `${h}px` }}
         ref={ref}
-        onClick={() => setH((prevH) => (prevH === 50 ? 100 : 50))}
+        //onClick={() => setH((prevH) => (prevH === 50 ? expandedHeigh : 50))}
+        onClick={() => setH((prevH) => (prevH === 50 ? expandedHeigh : 50))}
       >
+        {isExpanded ? 'expanded' : 'collapsed'}
         {children}
       </div>
     );
@@ -37,7 +39,7 @@ const Row = (props: {rowHeights: number[]}) => {
   const {
     outerRef,
     innerRef,
-    items
+    items: itemsToRenderNow
   }: {
     outerRef: React.LegacyRef<HTMLDivElement>;
     innerRef: React.LegacyRef<HTMLDivElement>;
@@ -45,7 +47,7 @@ const Row = (props: {rowHeights: number[]}) => {
   } = useVirtual({
     itemCount: rowHeights.length
   });
-  console.log('items', items);
+  console.log('items', itemsToRenderNow);
 
   return (
     <div
@@ -54,15 +56,16 @@ const Row = (props: {rowHeights: number[]}) => {
       ref={outerRef}
     >
       <div ref={innerRef}>
-        {items.map((item) => {
+        {itemsToRenderNow.map((item) => {
           const { index, size, measureRef } = item;
-          //console.log("item", item);
+          console.log("item", item);
 
           return (
             <AccordionItem
               key={index}
               className={`item ${index % 2 ? "dark" : ""}`}
               height={size}
+              expandedHeigh={rowHeights[index]}
               ref={measureRef}
             >
               <>👋🏻 Click Me {index}</>
