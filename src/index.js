@@ -3,33 +3,30 @@
 
 import { render } from "react-dom";
 
-import Row from "./Row";
-//import Column from "./Column";
-//import Grid from "./Grid";
+import Row, { getRandomSizes } from "./Row";
+import Column from "./Column";
+// import Grid from "./Grid";
 import "./styles.scss";
-
-const getRandomSizes = (min) => new Array(10).fill().map(() => min + Math.round(Math.random() * 100));
-//console.log(getRandomSizes(43));
 
 const App = () => (
   <div className="app">
-    <p>
+    {/* <p>
       💡 CodeSandbox might be <b>caching the old version</b> of React Cool
       Virtual. You can <b>manually specify to the latest version</b> to see the
       examples.
     </p>
-    <br />
+    <br /> */}
     <h4>Row</h4>
-    <Row rowHeights={getRandomSizes(35)} />
-    {/* <br />
+    <Row />
     <br />
     <h4>Column</h4>
-    <Column colWidths={getRandomSizes(75)} />
-    <br />
-    <br />
+    <Column colWidths={getRandomSizes(20, 75, 100)} />
+    {/* <br />
     <h4>Grid</h4>
-    <Grid rowHeights={getRandomSizes(35)} colWidths={getRandomSizes(100)} />
-    <br />
+    <Grid
+      rowHeights={getRandomSizes(10, 35, 100)}
+      colWidths={getRandomSizes(10, 100, 200)}
+    />
     <br /> */}
   </div>
 );
