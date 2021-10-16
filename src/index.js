@@ -8,7 +8,7 @@ import Row from "./Row";
 //import Grid from "./Grid";
 import "./styles.scss";
 
-const getRandomSizes = (min) => new Array(10).fill().map(() => min + Math.round(Math.random() * 1000));
+const getRandomSizes = (min) => new Array(10).fill().map(() => min + Math.round(Math.random() * 100));
 //console.log(getRandomSizes(43));
 
 const App = () => (
